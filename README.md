@@ -92,3 +92,9 @@ project per project, follow this pattern:
 This pattern keeps your project configuration organized and allows Nix to merge
 the base `np` module with your project-specific overrides, creating a tailored
 Neovim instance per project.
+
+## Default Experience
+
+### Screenshots?
+
+Yes, [some are here](./ss).
