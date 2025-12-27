@@ -8,6 +8,7 @@
   };
 
   outputs = {
+    self,
     nixpkgs,
     nixvim,
     ...
@@ -16,6 +17,24 @@
     pkgs = nixpkgs.legacyPackages.${system};
   in {
     formatter.${system} = pkgs.alejandra;
+
+    packages.${system} = {
+      np = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+        inherit pkgs;
+        module = {
+          imports = [
+            ./modules/neovim
+            ./nix/nixvim.nix
+          ];
+        };
+      };
+      default = self.packages.${system}.np;
+    };
+
+    apps.${system}.np = {
+      type = "app";
+      program = "${self.packages.${system}.np}/bin/nvim";
+    };
 
     devShells.${system}.default = pkgs.mkShell {
       packages = [
