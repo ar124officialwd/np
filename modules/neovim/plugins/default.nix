@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  stdenv,
+  ...
+}: {
   imports = [
     ./blink-cmp.nix
     ./bufferline.nix
@@ -36,7 +40,7 @@
     lsp-signature.enable = true;
     lsp-status.enable = true;
     lualine.enable = true;
-    luau-lsp.enable = true;
+    luau-lsp.enable = stdenv.hostPlatform.system != "x86_64-darwin";
     markview.enable = true;
     mini.enable = true;
     navic.enable = true;

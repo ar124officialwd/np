@@ -13,12 +13,17 @@
     nixvim,
     ...
   }: let
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+    systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+    forEachSystem = nixpkgs.lib.genAttrs systems;
   in {
-    formatter.${system} = pkgs.alejandra;
+    formatter = forEachSystem (
+      system:
+        nixpkgs.legacyPackages.${system}.alejandra
+    );
 
-    packages.${system} = {
+    packages = forEachSystem (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
       np = nixvim.legacyPackages.${system}.makeNixvimWithModule {
         inherit pkgs;
         module = {
@@ -27,39 +32,49 @@
             ./nix/nixvim.nix
           ];
         };
+        extraSpecialArgs = {stdenv = pkgs.stdenv;};
       };
       default = self.packages.${system}.np;
-    };
+    });
 
-    apps.${system}.np = {
-      type = "app";
-      program = "${self.packages.${system}.np}/bin/nvim";
-    };
+    apps = forEachSystem (system: {
+      np = {
+        type = "app";
+        program = "${self.packages.${system}.np}/bin/nvim";
+        meta = {
+          description = "Neovim with np configuration";
+        };
+      };
+    });
 
-    devShells.${system}.default = pkgs.mkShell {
-      packages = [
-        pkgs.lefthook
-        pkgs.markdownlint-cli
-        pkgs.mdbook
+    devShells = forEachSystem (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      default = pkgs.mkShell {
+        packages = [
+          pkgs.lefthook
+          pkgs.markdownlint-cli
+          pkgs.mdbook
+          (nixvim.legacyPackages.${system}.makeNixvimWithModule
+            {
+              inherit pkgs;
+              module = {
+                imports = [
+                  ./modules/neovim
+                  ./nix/nixvim.nix
+                ];
+              };
+              extraSpecialArgs = {stdenv = pkgs.stdenv;};
+            })
+        ];
 
-        (nixvim.legacyPackages.${system}.makeNixvimWithModule
-          {
-            inherit pkgs;
-            module = {
-              imports = [
-                ./modules/neovim
-                ./nix/nixvim.nix
-              ];
-            };
-          })
-      ];
-
-      shellHook = ''
-        if [ ! -f .git/hooks/pre-commit ]; then
-          echo "Installing lefthook hooks..."
-          lefthook install
-        fi
-      '';
-    };
+        shellHook = ''
+          if [ ! -f .git/hooks/pre-commit ]; then
+            echo "Installing lefthook hooks..."
+            lefthook install
+          fi
+        '';
+      };
+    });
   };
 }
