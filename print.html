@@ -262,9 +262,18 @@ specific configurations --- and don't pollute your OS or Home either.</p>
   in {
     devShells.${system}.default = pkgs.mkShell {
       packages = [
-        (nixvim.lib.${system}.mkNixvim {
-          imports = [ ./nix/nixvim.nix ];
-        }).neovim
+        (nixvim.legacyPackages.${system}.makeNixvimWithModule {
+          inherit pkgs;
+
+          module = {
+            imports = [
+              ./modules/neovim
+              ./nix/nixvim.nix
+            ];
+          };
+
+          extraSpecialArgs = {stdenv = pkgs.stdenv;};
+        })
       ];
     };
   };
@@ -449,7 +458,7 @@ Which-key to explore.</p>
 <h2 id="customization"><a class="header" href="#customization">Customization</a></h2>
 <p>The base is designed to be extended:</p>
 <ul>
-<li>Add presets for language support (see <a href="../presets/README.html">Presets</a>)</li>
+<li>Add presets for language support (see <a href="./presets/README.html">Presets</a>)</li>
 <li>Override NixVim options in your project's <code>nix/nixvim.nix</code></li>
 <li>Disable unwanted plugins or add new ones</li>
 </ul>
