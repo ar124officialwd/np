@@ -68,9 +68,18 @@ project per project, follow this pattern:
   in {
     devShells.${system}.default = pkgs.mkShell {
       packages = [
-        (nixvim.lib.${system}.mkNixvim {
-          imports = [ ./nix/nixvim.nix ];
-        }).neovim
+        (nixvim.legacyPackages.${system}.makeNixvimWithModule {
+          inherit pkgs;
+
+          module = {
+            imports = [
+              ./modules/neovim
+              ./nix/nixvim.nix
+            ];
+          };
+
+          extraSpecialArgs = {stdenv = pkgs.stdenv;};
+        })
       ];
     };
   };
