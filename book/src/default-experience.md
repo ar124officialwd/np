@@ -30,7 +30,23 @@ The interface uses Catppuccin theme with integrations for a cohesive look.
 - **Diagnostics Panel**: Trouble for workspace-wide issues
 - **Key Hints**: Which-key for discoverable bindings
 
-![Editor Screenshot](../ss/editor.png)
+### Screenshots
+
+#### Editor View
+
+![Editor Screenshot](./ss/editor.png)
+
+#### Which-Key
+
+![Which-key](./ss/which-key.png)
+
+#### LSP
+
+![LSP](./ss/lsp.png)
+
+#### Lazygit
+
+![Lazygit](./ss/lazygit.png)
 
 ## Language Support
 

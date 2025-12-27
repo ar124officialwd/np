@@ -118,9 +118,7 @@ This launches Neovim with the minimal base setup for a quick test.
 
 ### Screenshots?
 
-Yes, [some are here](./ss).
-
-![Editor Screenshot](./ss/editor.png)
+Yes, [some are here](https://ar-at-localhost.github.io/np/default-experience.html#ui--theme).
 
 ## FAQ
 
