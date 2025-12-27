@@ -1,0 +1,9 @@
+pre-commit:
+  commands:
+    format-nix:
+      run: nix fmt .
+      glob: "*.nix"
+      stage_fixed: true
+    check-flake:
+      run: nix flake check
+      glob: "*.nix"
