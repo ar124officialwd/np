@@ -98,3 +98,7 @@ Neovim instance per project.
 ### Screenshots?
 
 Yes, [some are here](./ss).
+
+## Roadmap
+
+See [Roadmap](./ROADMAP.md).
