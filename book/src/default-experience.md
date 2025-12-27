@@ -163,7 +163,7 @@ This enables Project-Oriented Development—no global state, per-project persist
 
 The base is designed to be extended:
 
-- Add presets for language support (see [Presets](../presets/README.md))
+- Add presets for language support (see [Presets](./presets/README.md))
 - Override NixVim options in your project's `nix/nixvim.nix`
 - Disable unwanted plugins or add new ones
 
