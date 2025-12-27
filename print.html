@@ -310,6 +310,147 @@ JSON, Bash, YAML/TOML, and Markdown.</p>
   inputs.np.nixvimModules.presets.web  # Includes JS/TS, HTML, CSS, etc.
 ];
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="default-experience"><a class="header" href="#default-experience">Default Experience</a></h1>
+<p>This page describes the out-of-the-box experience when using <code>np</code> without any
+presets or customizations. It's the base NixVim configuration that provides a
+complete, project-oriented Neovim setup.</p>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p><code>np</code> ships with a curated set of plugins, keybindings, and settings designed
+for efficient development. The focus is on usability, discoverability,
+and non-pollution—everything stays project-specific via Nix.</p>
+<p>Key highlights:</p>
+<ul>
+<li><strong>Leader Key</strong>: Space (<code>&lt;Space&gt;</code>)</li>
+<li><strong>Theme</strong>: Catppuccin with full UI integration</li>
+<li><strong>Session Management</strong>: Automatic save/restore for git repositories</li>
+<li><strong>Completion</strong>: Blink.cmp with LSP integration</li>
+<li><strong>Search</strong>: Snacks picker for fuzzy finding</li>
+<li><strong>Diagnostics</strong>: Trouble for workspace issues, custom signs and virtual text</li>
+</ul>
+<h2 id="ui--theme"><a class="header" href="#ui--theme">UI &amp; Theme</a></h2>
+<p>The interface uses Catppuccin theme with integrations for a cohesive look.</p>
+<ul>
+<li><strong>Status Line</strong>: Lualine with LSP status, git info, and diagnostics</li>
+<li><strong>Buffer Tabs</strong>: Bufferline with close buttons and indicators</li>
+<li><strong>File Explorer</strong>: Neo-tree sidebar with git status</li>
+<li><strong>Notifications</strong>: Noice for command-line and messages</li>
+<li><strong>Diagnostics Panel</strong>: Trouble for workspace-wide issues</li>
+<li><strong>Key Hints</strong>: Which-key for discoverable bindings</li>
+</ul>
+<p><img src="../ss/editor.png" alt="Editor Screenshot" /></p>
+<h2 id="language-support"><a class="header" href="#language-support">Language Support</a></h2>
+<h3 id="lsp-servers"><a class="header" href="#lsp-servers">LSP Servers</a></h3>
+<p>Out-of-the-box support for common config and markup languages:</p>
+<ul>
+<li><strong>Lua</strong>: lua_ls (with inlay hints)</li>
+<li><strong>JSON</strong>: jsonls</li>
+<li><strong>Markdown</strong>: marksman</li>
+<li><strong>Nix</strong>: nil_ls</li>
+<li><strong>TOML</strong>: taplo</li>
+<li><strong>YAML</strong>: yamlls</li>
+</ul>
+<p>Diagnostics include custom signs (e.g., <code></code> for errors) and virtual text with spacing.</p>
+<h3 id="tree-sitter-parsers"><a class="header" href="#tree-sitter-parsers">Tree-Sitter Parsers</a></h3>
+<p>Syntax highlighting and folding for:</p>
+<ul>
+<li>bash, json, lua, markdown, nix, regex, toml, vim, vimdoc, yaml</li>
+</ul>
+<p>Folding uses indent method with custom characters.</p>
+<h2 id="keybindings"><a class="header" href="#keybindings">Keybindings</a></h2>
+<p>Bindings are grouped logically under <code>&lt;leader&gt;</code> (space). Use <code>&lt;leader&gt;?</code> or
+Which-key to explore.</p>
+<h3 id="core-categories"><a class="header" href="#core-categories">Core Categories</a></h3>
+<ul>
+<li><strong>Windows</strong> (<code>&lt;leader&gt;w</code>): Navigation, resizing, splitting</li>
+<li><strong>Buffers</strong> (<code>&lt;leader&gt;b</code>): Switching, deleting, pinning</li>
+<li><strong>Tabs</strong> (<code>&lt;leader&gt;&lt;tab&gt;</code>): New, close, navigate</li>
+<li><strong>Explorer</strong> (<code>&lt;leader&gt;e</code>): Neo-tree toggle/reveal</li>
+<li><strong>Code/LSP</strong> (<code>&lt;leader&gt;c</code>): Rename, actions, definitions, diagnostics</li>
+<li><strong>Search</strong> (<code>&lt;leader&gt;s</code>): Files, buffers, grep, replace</li>
+<li><strong>Git</strong> (<code>&lt;leader&gt;g</code>): Lazygit, hunks, blame, log</li>
+<li><strong>Notifications</strong> (<code>&lt;leader&gt;n</code>): History, dismiss</li>
+<li><strong>Session</strong> (<code>&lt;leader&gt;sl</code>): Load last session</li>
+<li><strong>Debugger</strong> (<code>&lt;leader&gt;d</code>): Breakpoints, stepping, UI</li>
+</ul>
+<h3 id="examples-1"><a class="header" href="#examples-1">Examples</a></h3>
+<ul>
+<li><code>&lt;leader&gt;sf</code>: Search files</li>
+<li><code>&lt;leader&gt;cd</code>: Go to LSP definitions</li>
+<li><code>&lt;leader&gt;gg</code>: Open Lazygit</li>
+<li><code>&lt;C-s&gt;</code>: Save file (insert/visual/normal modes)</li>
+</ul>
+<p><img src="../ss/which-key.png" alt="Which-Key Screenshot" /></p>
+<h2 id="plugins"><a class="header" href="#plugins">Plugins</a></h2>
+<p>The base setup includes these enabled plugins (categorized):</p>
+<h3 id="completion--lsp"><a class="header" href="#completion--lsp">Completion &amp; LSP</a></h3>
+<ul>
+<li>blink-cmp: Fast completion</li>
+<li>lsp: Core LSP support</li>
+<li>lsp-signature: Function signatures</li>
+<li>lsp-status: Status indicators</li>
+<li>navic: Breadcrumb navigation</li>
+</ul>
+<h3 id="ui--navigation"><a class="header" href="#ui--navigation">UI &amp; Navigation</a></h3>
+<ul>
+<li>bufferline: Buffer tabs</li>
+<li>edgy: Window management</li>
+<li>lualine: Status line</li>
+<li>neo-tree: File explorer</li>
+<li>noice: Notifications</li>
+<li>trouble: Diagnostics panel</li>
+<li>web-devicons: Icons</li>
+<li>which-key: Key hints</li>
+</ul>
+<h3 id="development-tools"><a class="header" href="#development-tools">Development Tools</a></h3>
+<ul>
+<li>conform-nvim: Formatting</li>
+<li>dap, dap-ui, dap-view, dap-virtual-text: Debugging</li>
+<li>git-conflict: Merge conflict resolution</li>
+<li>gitsigns: Git hunks and blame</li>
+<li>lazydev: Lua development</li>
+<li>none-ls: Linting/formatting bridge</li>
+<li>toggleterm: Terminal integration</li>
+<li>treesitter: Syntax parsing</li>
+</ul>
+<h3 id="utilities"><a class="header" href="#utilities">Utilities</a></h3>
+<ul>
+<li>colorizer: Color previews</li>
+<li>emmet: HTML/CSS snippets</li>
+<li>grug-far: Search &amp; replace</li>
+<li>markview: Markdown rendering</li>
+<li>mini: Collection of small plugins</li>
+<li>snacks: Picker, notifications, terminal</li>
+<li>ts-autotag: Auto-close tags</li>
+<li>ts-comments: Enhanced comments</li>
+</ul>
+<h3 id="extra-plugins"><a class="header" href="#extra-plugins">Extra Plugins</a></h3>
+<ul>
+<li>plenary-nvim: Lua utilities</li>
+<li>nvim-lsp-file-operations: LSP file ops</li>
+</ul>
+<h2 id="session-management"><a class="header" href="#session-management">Session Management</a></h2>
+<p>For git repositories, <code>np</code> automatically:</p>
+<ul>
+<li>Saves session on exit (VimLeavePre) to <code>.nvim/session.vim</code></li>
+<li>Restores session on start (VimEnter) if no files specified</li>
+<li>Handles Neo-tree windows properly</li>
+<li>Adds <code>.nvim/</code> to <code>.gitignore</code> if needed</li>
+</ul>
+<p>This enables Project-Oriented Development—no global state, per-project persistence.</p>
+<h2 id="customization"><a class="header" href="#customization">Customization</a></h2>
+<p>The base is designed to be extended:</p>
+<ul>
+<li>Add presets for language support (see <a href="../presets/README.html">Presets</a>)</li>
+<li>Override NixVim options in your project's <code>nix/nixvim.nix</code></li>
+<li>Disable unwanted plugins or add new ones</li>
+</ul>
+<p>For example, to add Python support:</p>
+<pre><code class="language-nix">imports = [
+  inputs.np.nixvimModules.base
+  inputs.np.nixvimModules.presets.python
+];
+</code></pre>
+<p>This keeps your setup clean and reproducible.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="configuration"><a class="header" href="#configuration">Configuration</a></h1>
 <h2 id="overriding-options"><a class="header" href="#overriding-options">Overriding Options</a></h2>
 <p>Since <code>np</code> uses standard NixVim, customize by overriding options:</p>
