@@ -178,27 +178,36 @@
                         <h1 id="contributing"><a class="header" href="#contributing">Contributing</a></h1>
 <h2 id="development-setup"><a class="header" href="#development-setup">Development Setup</a></h2>
 <ol>
-<li>Clone the repo.</li>
+<li>Clone / Fork the repo.</li>
 <li>Enter the dev shell: <code>nix develop</code></li>
+<li>Create a branch from main</li>
 <li>Make changes.</li>
-<li>Run tests: <code>nix flake check</code></li>
-<li>Lint: <code>nix run nixpkgs#alejandra -- --check .</code></li>
+<li>Create a commit (Please follow conventional commitlint)</li>
+<li>Push</li>
+<li>Open a PR.</li>
 </ol>
-<h2 id="adding-presets"><a class="header" href="#adding-presets">Adding Presets</a></h2>
-<ol>
-<li>Create <code>modules/presets/yourlang.nix</code>.</li>
-<li>Add LSP, formatters, tree-sitter as needed.</li>
-<li>Update docs in <code>book/src/presets/</code>.</li>
-<li>Test by importing in a sample config.</li>
-</ol>
-<h2 id="ci"><a class="header" href="#ci">CI</a></h2>
-<p>Changes are tested via GitHub Actions. Ensure <code>nix build .</code> and <code>nix flake check</code>
-pass.</p>
+<blockquote>
+<p>[!NOTE]
+Flake is configured to auto-run Flake checks, and Lints.</p>
+</blockquote>
+<p>--</p>
+<blockquote>
+<p>[!TIP]
+Repo itself is configured to use <code>np</code> itself.
+<code>nvim</code> inside repo default shell, is <code>np</code>.</p>
+</blockquote>
 <h2 id="guidelines"><a class="header" href="#guidelines">Guidelines</a></h2>
 <ul>
+<li><strong>Project Oriented Development (POD)</strong>: POD cannot be sacrificed under any
+condition. Contributions that pollute the user's home directory or OS will
+not be merged. All configurations must remain project-specific and isolated.</li>
+<li><strong>Keybindings</strong>: Keys must be grouped logically, prioritizing usability over
+traditional conventions. This may or may not align with standard traditions.</li>
 <li>Follow NixVim best practices.</li>
 <li>Keep presets minimal and focused.</li>
 <li>Update docs for any changes.</li>
+<li>Strictly follow No Pollution policy.</li>
+<li>Create Lint-free Contributions.</li>
 </ul>
 
                     </main>
