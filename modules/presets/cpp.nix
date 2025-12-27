@@ -5,7 +5,7 @@
 
   lsp.servers.clangd.enable = true;
 
-  plugins.tree-sitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+  plugins.treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
     c
     cpp
   ];
