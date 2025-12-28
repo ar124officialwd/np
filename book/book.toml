@@ -3,7 +3,5 @@ title = "np Docs"
 authors = ["ar-at-localhost"]
 description = "Documentation for np, a NixVim configuration for Project Oriented Development"
 
-[output.html]
-
 [build]
 build-dir = "out"
