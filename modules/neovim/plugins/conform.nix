@@ -13,8 +13,8 @@ in {
         json = web;
         lua = ["stylua"];
         markdown = {
-          __unkeyed_2 = "prettierd";
-          __unkeyed_3 = "prettier";
+          __unkeyed-2 = "prettierd";
+          __unkeyed-3 = "prettier";
           stop_on_first = true;
         };
         nix = ["alejandra"];
