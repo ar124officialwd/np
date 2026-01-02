@@ -25,6 +25,7 @@
     dap-ui.enable = true;
     dap-view.enable = true;
     dap-virtual-text.enable = true;
+    diffview.enable = true;
     edgy.enable = true;
     emmet.enable = true;
     fzf-lua.enable = false;

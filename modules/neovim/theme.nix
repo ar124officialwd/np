@@ -5,11 +5,13 @@
       integrations = {
         blink_cmp = true;
         blink_indent = true;
+        diffview = true;
         fzf = true;
         gitsigns = true;
         grug_far = true;
         markview = true;
         mini = true;
+        neogit = true;
         neotree = true;
         noice = true;
         render_markdown = true;
