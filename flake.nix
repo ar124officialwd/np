@@ -13,29 +13,35 @@
     nixvim,
     ...
   }: let
-    systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+    systems = [
+      "x86_64-linux"
+      "aarch64-linux"
+      "x86_64-darwin"
+      "aarch64-darwin"
+    ];
     forEachSystem = nixpkgs.lib.genAttrs systems;
   in {
-    formatter = forEachSystem (
-      system:
-        nixpkgs.legacyPackages.${system}.alejandra
-    );
+    formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-    packages = forEachSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      np = nixvim.legacyPackages.${system}.makeNixvimWithModule {
-        inherit pkgs;
-        module = {
-          imports = [
-            ./modules/neovim
-            ./nix/nixvim.nix
-          ];
+    packages = forEachSystem (
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        np = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+          inherit pkgs;
+          module = {
+            imports = [
+              ./modules/neovim
+              ./nix/nixvim.nix
+            ];
+          };
+          extraSpecialArgs = {
+            stdenv = pkgs.stdenv;
+          };
         };
-        extraSpecialArgs = {stdenv = pkgs.stdenv;};
-      };
-      default = self.packages.${system}.np;
-    });
+        default = self.packages.${system}.np;
+      }
+    );
 
     apps = forEachSystem (system: {
       np = {
@@ -62,16 +68,19 @@
       };
     };
 
-    devShells = forEachSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      default = pkgs.mkShell {
-        packages = [
-          pkgs.lefthook
-          pkgs.markdownlint-cli
-          pkgs.mdbook
-          (nixvim.legacyPackages.${system}.makeNixvimWithModule
-            {
+    devShells = forEachSystem (
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        default = pkgs.mkShell {
+          packages = [
+            pkgs.alejandra
+            pkgs.lefthook
+            pkgs.markdownlint-cli2
+            pkgs.markdownlint-cli
+            pkgs.mdbook
+            pkgs.prettierd
+            (nixvim.legacyPackages.${system}.makeNixvimWithModule {
               inherit pkgs;
               module = {
                 imports = [
@@ -79,17 +88,20 @@
                   ./nix/nixvim.nix
                 ];
               };
-              extraSpecialArgs = {stdenv = pkgs.stdenv;};
+              extraSpecialArgs = {
+                stdenv = pkgs.stdenv;
+              };
             })
-        ];
+          ];
 
-        shellHook = ''
-          if [ ! -f .git/hooks/pre-commit ]; then
-            echo "Installing lefthook hooks..."
-            lefthook install
-          fi
-        '';
-      };
-    });
+          shellHook = ''
+            if [ ! -f .git/hooks/pre-commit ]; then
+              echo "Installing lefthook hooks..."
+              lefthook install
+            fi
+          '';
+        };
+      }
+    );
   };
 }

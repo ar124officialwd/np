@@ -12,13 +12,9 @@ in {
         bash = ["shfmt"];
         json = web;
         lua = ["stylua"];
-        markdown = {
-          __unkeyed-2 = "prettierd";
-          __unkeyed-3 = "prettier";
-          stop_on_first = true;
-        };
-        nix = ["alejandra"];
         typescript = web;
+        nix = ["alejandra"];
+        markdown = ["prettierd" "prettier"];
       };
 
       format_on_save = ''
@@ -27,7 +23,7 @@ in {
           if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
             return
           end
-          return { timeout_ms = 500, lsp_format = 'never' }
+          return { timeout_ms = 500, lsp_format = 'fallback' }
         end
       '';
     };
