@@ -4,12 +4,12 @@
     dim.enabled = true;
     indent.enabled = true;
     input.enabled = true;
-    lazygit.enabed = true;
+    lazygit.enabled = true;
     notifier.enabled = true;
     notify.enabled = true;
-    picker.enable = true;
-    quickfile.enable = true;
-    scope.enable = true;
+    picker.enabled = true;
+    quickfile.enabled = true;
+    scope.enabled = true;
     rename.enabled = true;
     terminal.enabled = true;
     utils.enabled = true;
