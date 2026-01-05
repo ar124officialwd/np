@@ -12,7 +12,6 @@ in {
         bash = ["shfmt"];
         json = web;
         lua = ["stylua"];
-        typescript = web;
         nix = ["alejandra"];
         markdown = ["prettierd" "prettier"];
       };
