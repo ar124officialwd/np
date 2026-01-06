@@ -7,9 +7,9 @@
       nested = true;
       callback.__raw = ''
         function()
-          -- check if explicit files were passed (but allow "nvim .")
-          local argc = vim.fn.argc()
-          if argc > 1 or (argc == 1 and vim.fn.argv(0) ~= ".") then
+          -- only restore when no arguments provided
+          -- (nvim . and nvim dir/ are handled by neo-tree's auto-launch)
+          if vim.fn.argc() > 0 then
             return
           end
 
@@ -31,38 +31,10 @@
 
           -- defer to ensure plugins are loaded
           vim.defer_fn(function()
-            -- close any neo-tree that might have auto-opened
-            for _, win in ipairs(vim.api.nvim_list_wins()) do
-              local buf = vim.api.nvim_win_get_buf(win)
-              if vim.bo[buf].filetype == "neo-tree" then
-                pcall(vim.api.nvim_win_close, win, true)
-              end
-            end
-
             vim.cmd("silent! source " .. vim.fn.fnameescape(session))
-
-            -- after restore, re-initialize neo-tree if it should be visible
-            vim.defer_fn(function()
-              -- check if session had neo-tree window
-              for _, win in ipairs(vim.api.nvim_list_wins()) do
-                local buf = vim.api.nvim_win_get_buf(win)
-                if vim.bo[buf].filetype == "neo-tree" then
-                  -- close the restored neo-tree window
-                  pcall(vim.api.nvim_win_close, win, true)
-                  -- reopen neo-tree properly
-                  vim.cmd("Neotree show")
-                  -- move focus back to main window
-                  for _, w in ipairs(vim.api.nvim_list_wins()) do
-                    local b = vim.api.nvim_win_get_buf(w)
-                    if vim.bo[b].filetype ~= "neo-tree" and vim.bo[b].buftype == "" then
-                      vim.api.nvim_set_current_win(w)
-                      break
-                    end
-                  end
-                  break
-                end
-              end
-            end, 50)
+            if pcall(require, "neo-tree") then
+              vim.cmd("Neotree focus")
+            end
           end, 100)
         end
       '';
@@ -117,6 +89,21 @@
             end
             if not found then
               vim.fn.writefile({ entry }, gitignore, "a")
+            end
+          end
+
+          if pcall(require, "neo-tree") then
+            -- close neo-tree windows and delete buffers before saving
+            for _, win in ipairs(vim.api.nvim_list_wins()) do
+              local buf = vim.api.nvim_win_get_buf(win)
+              if vim.bo[buf].filetype == "neo-tree" then
+                pcall(vim.api.nvim_win_close, win, true)
+              end
+            end
+            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+              if vim.bo[buf].filetype == "neo-tree" then
+                pcall(vim.api.nvim_buf_delete, buf, { force = true })
+              end
             end
           end
 
