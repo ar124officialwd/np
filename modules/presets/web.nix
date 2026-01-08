@@ -3,7 +3,7 @@
     __unkeyed-1 = "biome";
     __unkeyed-2 = "prettierd";
     __unkeyed-3 = "prettier";
-    stop_on_first = true;
+    stop_after_first = true;
   };
 in {
   imports = [
